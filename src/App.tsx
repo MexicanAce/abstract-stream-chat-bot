@@ -151,7 +151,6 @@ function App() {
       await chatClient.connectUser(
         {
           id: walletAddress,
-          name: "Chat Bot",
         },
         userToken
       );
