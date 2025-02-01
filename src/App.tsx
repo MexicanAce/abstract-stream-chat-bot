@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { StreamChat, Event, Message } from 'stream-chat';
-import { ConnectionForm } from './components/ConnectionForm';
-import { CommandList } from './components/CommandList';
-import { CommandEditor } from './components/CommandEditor';
-import { MessageList } from './components/MessageList';
-import { Modal } from './components/Modal';
-import { ChatMessage, Command } from './types';
-import { DEFAULT_COMMANDS } from './constants';
-import { AbstractLogo } from './components/AbstractLogo';
+import React, { useState, useEffect } from "react";
+import { StreamChat, Event, Message } from "stream-chat";
+import { ConnectionForm } from "./components/ConnectionForm";
+import { CommandList } from "./components/CommandList";
+import { CommandEditor } from "./components/CommandEditor";
+import { MessageList } from "./components/MessageList";
+import { Modal } from "./components/Modal";
+import { ChatMessage, Command } from "./types";
+import { DEFAULT_COMMANDS } from "./constants";
+import { AbstractLogo } from "./components/AbstractLogo";
 
-const STORAGE_KEY = 'abstract-stream-chat-bot-commands';
-const TOKEN_STORAGE_KEY = 'abstract-stream-chat-bot-token';
-const WALLET_ADDRESS_KEY = 'abstract-stream-chat-bot-wallet-address';
+const STORAGE_KEY = "abstract-stream-chat-bot-commands";
+const TOKEN_STORAGE_KEY = "abstract-stream-chat-bot-token";
+const WALLET_ADDRESS_KEY = "abstract-stream-chat-bot-wallet-address";
 
 function App() {
-  const [apiKey, setApiKey] = useState('43pyq3xf82zq');
+  const [apiKey, setApiKey] = useState("43pyq3xf82zq");
   const [userToken, setUserToken] = useState(() => {
-    return localStorage.getItem(TOKEN_STORAGE_KEY) || '';
+    return localStorage.getItem(TOKEN_STORAGE_KEY) || "";
   });
   const [walletAddress, setWalletAddress] = useState(() => {
-    return localStorage.getItem(WALLET_ADDRESS_KEY) || '';
+    return localStorage.getItem(WALLET_ADDRESS_KEY) || "";
   });
   const [streamerAddress, setStreamerAddress] = useState(
-    '0xe5a8153d43217784677d5de75c8745f669ff162b' // lofi
+    "0xe5a8153d43217784677d5de75c8745f669ff162b" // lofi
     // '0x370d58b9adf6c2feb000bf3e18908d48878b3f4e' // portport
   );
   const [syncAddresses, setSyncAddresses] = useState(false);
@@ -43,13 +43,13 @@ function App() {
           response: cmd.isJavaScript
             ? new Function(
                 cmd.responseText
-                  .replace('function anonymous(\n) {\n', '')
+                  .replace("function anonymous(\n) {\n", "")
                   .slice(0, -2)
               )
             : () => cmd.responseText,
         }));
       } catch (err) {
-        console.error('Error loading commands from storage:', err);
+        console.error("Error loading commands from storage:", err);
         return DEFAULT_COMMANDS;
       }
     }
@@ -81,9 +81,28 @@ function App() {
     }
   }, [commands]);
 
+  function parseJwt(token) {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+
+    return JSON.parse(jsonPayload);
+  }
+
   useEffect(() => {
     if (userToken) {
       localStorage.setItem(TOKEN_STORAGE_KEY, userToken);
+      const parsedToken = parseJwt(userToken);
+      setWalletAddress(parsedToken['user_id']);
+      localStorage.setItem(WALLET_ADDRESS_KEY, parsedToken['user_id']);
     } else {
       localStorage.removeItem(TOKEN_STORAGE_KEY);
     }
@@ -122,7 +141,7 @@ function App() {
       setError(null);
 
       if (!apiKey || !userToken || !walletAddress || !streamerAddress) {
-        throw new Error('Please fill in all fields');
+        throw new Error("Please fill in all fields");
       }
 
       const chatClient = StreamChat.getInstance(apiKey, {
@@ -132,7 +151,7 @@ function App() {
       await chatClient.connectUser(
         {
           id: walletAddress,
-          name: 'Chat Bot',
+          name: "Chat Bot",
         },
         userToken
       );
@@ -145,7 +164,7 @@ function App() {
       });
 
       channels.forEach((channel) => {
-        channel.on('message.new', (event: Event) => {
+        channel.on("message.new", (event: Event) => {
           const message = event.message as Message;
           const command = commands.find((cmd) => message.text === cmd.trigger);
 
@@ -153,8 +172,8 @@ function App() {
             [
               {
                 id: message.id || Date.now().toString(),
-                user: message.user?.name || 'Unknown',
-                text: message.text || '',
+                user: message.user?.name || "Unknown",
+                text: message.text || "",
                 timestamp: new Date(),
                 triggeredCommand: command?.trigger,
               },
@@ -174,7 +193,7 @@ function App() {
         });
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
       setIsConnected(false);
     }
   };
@@ -285,7 +304,7 @@ function App() {
         </div>
 
         <div className="mt-4 text-center text-sm text-gray-500">
-          Made with ❤️ by{' '}
+          Made with ❤️ by{" "}
           <a
             href="https://x.com/mexicanace"
             target="_blank"

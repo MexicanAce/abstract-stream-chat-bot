@@ -91,7 +91,7 @@ export function ConnectionForm({
         </div>
 
         <div className="space-y-4">
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Your AGW Address
             </label>
@@ -102,7 +102,7 @@ export function ConnectionForm({
               onChange={(e) => onWalletAddressChange(e.target.value)}
               className="w-full rounded-full border-gray-300 shadow-sm focus:border-abstract-lime focus:ring focus:ring-abstract-lime focus:ring-opacity-50"
             />
-          </div>
+          </div> */}
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -115,7 +115,7 @@ export function ConnectionForm({
               disabled={syncAddresses}
               className="w-full rounded-full border-gray-300 shadow-sm focus:border-abstract-lime focus:ring focus:ring-abstract-lime focus:ring-opacity-50"
             />
-            <div className="mt-2">
+            {/* <div className="mt-2">
               <label className="inline-flex items-center">
                 <input
                   type="checkbox"
@@ -127,7 +127,7 @@ export function ConnectionForm({
                   Use same AGW address
                 </span>
               </label>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
