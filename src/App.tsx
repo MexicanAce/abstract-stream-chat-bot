@@ -296,7 +296,7 @@ function App() {
           </a>
           (
           <a
-            href="https://github.com/mexicanace"
+            href="https://github.com/mexicanace/abstract-stream-chat-bot"
             target="_blank"
             rel="noopener noreferrer"
             className="text-abstract-dark font-medium hover:text-abstract-lime transition-colors"

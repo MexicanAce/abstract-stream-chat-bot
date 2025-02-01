@@ -10,3 +10,5 @@ This is a website that offers the support of a chat bot for helping automate som
 - 💰 Integrated w/ your AGW wallet _(Coming Soon)_
 - 📈 Integrated w/ AI chat bots _(Coming Soon)_
 - 🤝 Open-source and anyone is free to take as inspiration
+
+[Edit in StackBlitz ⚡️](https://stackblitz.com/~/github.com/MexicanAce/abstract-stream-chat-bot)
