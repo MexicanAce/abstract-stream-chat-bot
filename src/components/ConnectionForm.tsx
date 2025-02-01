@@ -111,7 +111,7 @@ export function ConnectionForm({
             <input
               type="text"
               value={streamerAddress}
-              onChange={(e) => onStreamerAddressChange(e.target.value)}
+              onChange={(e) => onStreamerAddressChange(e.target.value.toLowerCase())}
               disabled={syncAddresses}
               className="w-full rounded-full border-gray-300 shadow-sm focus:border-abstract-lime focus:ring focus:ring-abstract-lime focus:ring-opacity-50"
             />
