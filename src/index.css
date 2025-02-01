@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --abstract-lime: #00FF66;
+  --abstract-dark: #111111;
+  --abstract-gray: #F7F7F7;
+}
+
+body {
+  background-color: var(--abstract-gray);
+  color: var(--abstract-dark);
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.abstract-gradient {
+  background: linear-gradient(-45deg, #22d6ff, #9fedff 48%, #3cff73 78%, #3cff73 100%, #fff 150%, #fff 200%);
+  background-size: 200% 200%;
+  animation: gradient-shift 5s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
